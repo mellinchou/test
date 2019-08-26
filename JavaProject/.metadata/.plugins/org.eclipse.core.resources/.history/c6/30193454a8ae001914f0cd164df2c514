@@ -1,0 +1,72 @@
+package test_client;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class CapoGame extends JPanel implements ActionListener {
+	public String[] pics= {".\\capoo\\capoo04-01.png",".\\capoo\\capoo04-02.png",".\\capoo\\capoo04-03.png",".\\capoo\\capoo04-04.png",".\\capoo\\capoo04-05.png",".\\capoo\\capoo04-06.png",};
+	public static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	public static Rectangle bounds = ge.getMaximumWindowBounds();
+	private ImageIcon iconBoard=new ImageIcon(".\\board110.jpg");
+	private int screenWidth;
+	private int screenHeight;
+	private int identity=-1;//1 black,-1 white
+	private final int RADIUS=90;
+	public void getIdentity(int identity) {
+		this.identity=identity;
+	}
+	public CapoGame(int width,int height) {		
+		screenWidth=width;
+		screenHeight=height;
+		this.setSize(width,height);
+		this.setLayout(null);
+		
+		ChessPanel chessBoard=new ChessPanel();
+		BoardFrame boardFrame=new BoardFrame();
+		boardFrame.setChessBoard(chessBoard);
+		//this.add(chessBoard,new Integer(1000));
+		this.add(chessBoard,new Integer(150));
+		//chessBoard.setOpaque(true);
+		chessBoard.setBounds((int)(bounds.getWidth()*0.1),(int)(bounds.getHeight()*0.1),iconBoard.getIconWidth(),iconBoard.getIconHeight());
+			
+		
+		
+		Timer timer = new Timer(500, this);
+		timer.start();
+	}	
+	public int i=0;	
+	@Override
+	public void actionPerformed(ActionEvent e) {  		
+		repaint();	
+	}
+	public void paintComponent(Graphics g) {			
+		super.paintComponent(g);
+		Image capoo = (Toolkit.getDefaultToolkit().getImage(pics[i]));		
+		g.drawImage(capoo, 0, 0,(int)screenWidth,(int)screenHeight , this);
+		i++;
+		if(i==5) i=0;
+		Image chessBoard = (Toolkit.getDefaultToolkit().getImage(".\\board110.jpg"));
+		g.drawImage(chessBoard,(int)(bounds.getWidth()*0.1),(int)(bounds.getHeight()*0.1),chessBoard.getWidth(this),chessBoard.getHeight(this) , this);
+		Image imageUrTurn = (Toolkit.getDefaultToolkit().getImage(".\\yourTurn.png"));
+		g.drawImage(imageUrTurn,(int)(bounds.getWidth()*0.55),(int)(bounds.getHeight()*0.1),(int)(imageUrTurn.getWidth(this)),(int)(imageUrTurn.getHeight(this)*1.2), this);
+		
+		if(identity==1) {
+			g.setColor(Color.BLACK);
+			g.fillOval((int)(bounds.getWidth()*0.653),(int)(bounds.getHeight()*0.25), RADIUS, RADIUS);
+		}else if(identity==-1) {
+			g.setColor(Color.WHITE);
+			g.fillOval((int)(bounds.getWidth()*0.653),(int)(bounds.getHeight()*0.25), RADIUS, RADIUS);
+		}
+	}
+}

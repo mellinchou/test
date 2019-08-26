@@ -1,0 +1,51 @@
+package test_client;
+
+import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class CapoGame extends JPanel implements ActionListener {
+	public String[] pics= {".\\capoo\\capoo04-01.png",".\\capoo\\capoo04-02.png",".\\capoo\\capoo04-03.png",".\\capoo\\capoo04-04.png",".\\capoo\\capoo04-05.png",".\\capoo\\capoo04-06.png",};
+	public static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	public static Rectangle bounds = ge.getMaximumWindowBounds();
+	private ImageIcon iconBoard=new ImageIcon(".\\board110.jpg");
+	private int screenWidth;
+	private int screenHeight;
+	public CapoGame(int width,int height) {		
+		screenWidth=width;
+		screenHeight=height;
+		this.setSize(width,height);
+		this.setLayout(null);
+		
+		ChessPanel chessBoard=new ChessPanel();
+		this.add(chessBoard,new Integer(1000));
+		this.add(chessBoard,new Integer(150));
+		chessBoard.setOpaque(true);
+		chessBoard.setBounds(170,105,iconBoard.getIconWidth(),iconBoard.getIconHeight());
+		
+		Timer timer = new Timer(300, this);
+		timer.start();
+	}	
+	public int i=0;	
+	@Override
+	public void actionPerformed(ActionEvent e) {  		
+		repaint();	
+	}
+	public void paintComponent(Graphics g) {			
+		super.paintComponent(g);
+		Image capoo = (Toolkit.getDefaultToolkit().getImage(pics[i]));		
+		g.drawImage(capoo, 0, 0,(int)screenWidth,(int)screenHeight , this);
+		i++;
+		if(i==5) i=0;
+		Image chessBoard = (Toolkit.getDefaultToolkit().getImage(".\\board110.jpg"));
+		g.drawImage(chessBoard,170,105,chessBoard.getWidth(this),chessBoard.getHeight(this) , this);
+	}
+}

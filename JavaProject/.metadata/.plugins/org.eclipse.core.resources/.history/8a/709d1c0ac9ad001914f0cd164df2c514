@@ -1,0 +1,122 @@
+package test;
+
+import java.awt.*;
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+import javax.swing.*;
+
+
+public class Main {
+	enum Status{CONTINUE, BLACK_WIN,WHITE_WIN,DRAW};
+	enum Turn{BLACK,WHITE};
+	static ServerSocket serverSock;
+	static Socket connection1;
+	static Socket connection2;
+	static DataInputStream clientInput1;
+	static DataOutputStream clientOutput1;
+	static DataInputStream clientInput2;
+	static DataOutputStream clientOutput2;
+	
+	public static void main(String[] args) {
+		/*
+		 * JFrame frame=new JFrame(); frame.add(new GamePanel(10));
+		 * frame.setSize(500,500);; frame.setVisible(true);
+		 */
+		
+		Play p1=new Play();
+		Status status=Status.CONTINUE;
+		Turn turn=Turn.BLACK;//black starts the game
+		Scanner in =new Scanner(System.in);
+		int x=-1,y=-1;
+		
+		try {
+			serverSock=new ServerSocket(8000);
+			connection1=serverSock.accept();
+			clientOutput1.writeInt(88);
+			connection2=serverSock.accept();
+			clientOutput2.writeInt(99);
+			clientInput1=new DataInputStream(connection1.getInputStream());
+			clientOutput1=new DataOutputStream(connection1.getOutputStream());
+			clientInput2=new DataInputStream(connection2.getInputStream());
+			clientOutput2=new DataOutputStream(connection2.getOutputStream());
+//			System.out.println(clientInput1.readInt());
+//			System.out.println(clientInput1.readInt());
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		while(status==Status.CONTINUE) {
+			
+			try {
+				for (int i=0;i<15;i++) { //send the current game board to the players
+					for (int j=0;j<15;j++) {
+						clientOutput1.writeInt(p1.keys[i][j]);
+						clientOutput2.writeInt(p1.keys[i][j]);
+					}
+				}
+				
+				int win=p1.checkWin();
+				if (win==1) {
+					status=Status.BLACK_WIN;
+					clientOutput1.writeInt(2);
+					clientOutput2.writeInt(2);
+				}else if (win==-1) {
+					status=Status.WHITE_WIN;
+					clientOutput1.writeInt(-2);
+					clientOutput2.writeInt(-2);
+				}else if (win==2) {
+					status=Status.DRAW;
+					clientOutput1.writeInt(0);
+					clientOutput2.writeInt(0);
+				}
+				
+				if (turn==Turn.BLACK) {				
+					clientOutput1.writeInt(1);//1 for black
+					clientOutput2.writeInt(1);
+					x = clientInput1.readInt();//read the coordinates from the players
+					y = clientInput1.readInt();
+					
+					p1.keys[x][y]=1;
+					System.out.println("After Black's play");
+					p1.print();
+				
+					turn=Turn.WHITE;
+				}else {
+					clientOutput1.writeInt(-1);
+					clientOutput2.writeInt(-1);//-1 for white
+					x = clientInput2.readInt();//read the coordinates from the players
+					y = clientInput2.readInt();
+					
+					p1.keys[x][y]=-1;
+					System.out.println("After White's play");
+					p1.print();
+					
+					turn=Turn.BLACK;
+				}
+				
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("From Client: "+x+y);
+			
+		}
+		
+		try {
+			clientOutput1.close();
+			clientInput1.close();
+			clientOutput2.close();
+			clientInput2.close();
+			connection1.close();
+			connection2.close();
+			serverSock.close();
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}
+

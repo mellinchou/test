@@ -1,0 +1,27 @@
+package test_client;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
+public class test_buttons extends JButton implements ActionListener{
+	private int x;
+	private int y;
+	
+	public test_buttons() {
+		this.addActionListener(this);
+		this.x=x;
+		this.y=y;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//setIdentity(1);
+		this.setEnabled(false);
+		//this.setVisible(false);
+		String coordinates=((Component) e.getSource()).getName();
+		System.out.println(coordinates);
+		repaint();	
+	}
+}

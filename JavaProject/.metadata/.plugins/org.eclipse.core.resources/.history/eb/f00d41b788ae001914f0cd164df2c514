@@ -1,0 +1,53 @@
+package test_client;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.*;
+
+public class ChessPanel extends JPanel {
+
+	private ChessButton[][] buttons = new ChessButton[19][19];
+	private final int RADIUS=23;
+	public ChessPanel() {
+		this.setLayout(null);
+		ImageIcon chessBoard = new ImageIcon(".\\board110.jpg");
+		this.setSize(chessBoard.getIconWidth(), chessBoard.getIconHeight());
+		this.setVisible(true);
+		this.setBackground(null);
+
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 19; j++) {
+				buttons[i][j] = new ChessButton();
+				this.add(buttons[i][j], new Integer(10000));
+				buttons[i][j].setBounds(3 + i * 30, 3 + j * 30, 29, 29);
+				buttons[i][j].setPos(18 + i * 29, 18 + j * 29);
+			}
+		}
+	}
+
+	public void paintComponent(Graphics g) {
+
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 19; j++) {
+				if (buttons[i][j].getIdentity() == 1) {
+					g.setColor(Color.BLACK);
+					g.fillOval((int) buttons[i][j].getPos(0) - 12+i, (int) buttons[i][j].getPos(1) - 12+j, RADIUS, RADIUS);
+				} else if (buttons[i][j].getIdentity() == -1) {
+					g.setColor(Color.WHITE);
+					g.fillOval((int) buttons[i][j].getPos(0)- 12+i, (int) buttons[i][j].getPos(1) - 12+j, RADIUS, RADIUS);
+				}
+			}
+		}
+	}
+	public int[] findButton(Object target) {
+		int[] coordinates= {-1,-1};
+        for (int x = 0; x < buttons.length; x++) {
+            for (int y = 0; y < buttons[0].length; y++) {
+                if (target.equals(buttons[x][y])) {
+                    coordinates[0]=x;
+                    coordinates[1]=y;
+                }
+            }
+        }
+        return coordinates;
+    }
+}

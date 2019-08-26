@@ -1,0 +1,78 @@
+package test_client;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Paint;
+import java.awt.event.ActionEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+public class GameFrame extends JFrame{
+	private final JLabel title=new JLabel("Gomoku Online!");
+	private static final int RADIUS = 23;
+	public ChessButton[][] buttons = new ChessButton[19][19];
+	public final JLabel lab_turn=new JLabel("Your Turn");
+	private final JPanel chess_container=new JPanel(new GridLayout(19,19)); 
+	Border padding1 = BorderFactory.createEmptyBorder(15, 15, 40, 40);
+	
+	public GameFrame() {
+		setSize(700, 700);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		title.setForeground(Color.black);
+		title.setBackground(Color.black);
+		title.setFont(new Font("Monospaced", Font.BOLD, 30));
+		lab_turn.setFont(new Font("Monospaced", Font.BOLD, 30));
+		chess_container.setSize(300, 300);
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 19; j++) {
+				
+				buttons[i][j] = new ChessButton(i,j);
+				buttons[i][j].setBackground(new Color(250, 207, 141));
+				chess_container.add(buttons[i][j]);
+				buttons[i][j].setPreferredSize(new Dimension(25, 25));
+			}
+		}
+		JPanel p1=new JPanel();
+		p1.setBorder(padding1);
+		Box p=Box.createVerticalBox();
+		p.setBackground(Color.black);
+		p.add(title);
+		p.add(lab_turn);
+		
+		p.add(chess_container);
+		p1.add(p);
+		p1.setBackground(Color.black);
+		p1.setSize(900, 900);
+		this.setBackground(Color.black);
+		this.add(p);
+	}
+	public void paintComponent(Graphics g) {
+
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 19; j++) {
+				if (buttons[i][j].getIdentity() == 1) {
+					g.setColor(Color.BLACK);
+					g.fillOval((int) buttons[i][j].getPos(0) - 12+i, (int) buttons[i][j].getPos(1) - 12+j, RADIUS, RADIUS);
+				} else if (buttons[i][j].getIdentity() == -1) {
+					g.setColor(Color.WHITE);
+					g.fillOval((int) buttons[i][j].getPos(0)- 12+i, (int) buttons[i][j].getPos(1) - 12+j, RADIUS, RADIUS);
+				}
+			}
+		}
+	}
+	public void actionPerformed(ActionEvent e) {  		
+		repaint();	
+	}
+	
+}

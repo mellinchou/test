@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+C:\Users\Melod\OneDrive\Documents\NCKU\Coding-X\Week2_Java\JavaProject\.metadata\.plugins\org.eclipse.jdt.core
+3311933176.index
+1536166027.index
+2042520437.index
+1916126292.index

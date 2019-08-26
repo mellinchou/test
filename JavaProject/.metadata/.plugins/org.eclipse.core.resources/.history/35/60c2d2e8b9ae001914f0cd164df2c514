@@ -1,0 +1,57 @@
+package test_client;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
+public class test_buttons extends JButton{
+	private int x;
+	private int y;
+	private float[] pos=new float[2];
+	private int identity;
+	private String coordinates;
+	
+	public test_buttons(int x,int y) {
+		this.addActionListener(new test_btn_listener());
+		this.x=x;
+		this.y=y;
+		this.setBorder(new RoundedBorder(10));
+	}
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		//setIdentity(1);
+//		this.setEnabled(false);
+//		//this.setVisible(false);
+//		coordinates=((Component) e.getSource()).getName();
+//		System.out.println(coordinates);
+//		repaint();	
+//	}
+	
+	public String getCoordinates() {
+		return coordinates;
+	}
+	public void setPos(float posX,float posY) {
+		pos[0]=posX;
+		pos[1]=posY;
+	}
+	public float getPos(int i){
+		return pos[i];
+	}
+	public void setIdentity(int identity) {
+		this.identity=identity;
+	}
+	public int getIdentity() {
+		return this.identity;
+	}
+	public String getName() {
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.append(this.y);
+		stringBuilder.append(" ");
+		stringBuilder.append(this.x);
+		String coordinates = stringBuilder.toString();
+		return coordinates;
+	}
+}
