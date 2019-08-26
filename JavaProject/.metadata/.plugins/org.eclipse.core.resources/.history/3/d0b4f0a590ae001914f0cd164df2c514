@@ -1,0 +1,85 @@
+package test_client;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+import javax.swing.*;
+
+
+public class BoardFrame extends JFrame{
+
+	public static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	public static Rectangle bounds = ge.getMaximumWindowBounds();
+	private ImageIcon iconBoard=new ImageIcon(".\\board110.jpg");
+	public static JComponent  newContentPane;
+	public static ChessPanel chessBoard=new ChessPanel();
+	private final int RADIUS=23;
+//	public static void main (String[] args) {
+//		
+//		
+//		BoardFrame frame=new BoardFrame();	
+//		
+//		////顯示Home
+//		//prepareHome();
+//		
+//		//顯示遊戲進入畫面
+////		prepareMenu();	
+//		
+//		//顯示遊戲畫面
+//		prepareGame();
+//		
+//		//顯示frame
+//		frame.setVisible(true);
+//		
+//	}
+	public BoardFrame() {			
+		newContentPane=new MainPanel() ;
+        newContentPane.setOpaque(true); //content panes must be opaque
+        setContentPane(newContentPane);       
+        this.setSize(bounds.width, bounds.height);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		this.add(chessBoard,new Integer(1000));
+		this.add(chessBoard,new Integer(150));
+		chessBoard.setOpaque(true);
+		chessBoard.setBounds(170,105,iconBoard.getIconWidth(),iconBoard.getIconHeight());
+	}
+	public void actionPerformed(ActionEvent e) {  		
+		repaint();	
+	}
+//	public static void prepareHome() {
+//		//顯示Home
+//		HomePage menuHome=new HomePage(bounds.width,bounds.height);
+//		menuHome.setOpaque(true);
+//		newContentPane.add(menuHome,new Integer(100));
+//		menuHome.setBounds(0,0,bounds.width,bounds.height);
+//	}
+//	public static void prepareMenu() {
+//		//顯示遊戲進入畫面
+//		MenuPage homePanel=new MenuPage(bounds.width,bounds.height);
+//		homePanel.setOpaque(true);
+//		newContentPane.add(homePanel,new Integer(100));
+//		homePanel.setBounds(0,0,bounds.width,bounds.height);
+//	}
+	
+	public static void prepareGame() {
+		//顯示遊戲畫面
+		CapoGame capoPics=new CapoGame(bounds.width,bounds.height);	
+		capoPics.setOpaque(true);
+		newContentPane.add(capoPics,new Integer(100));
+		capoPics.setBounds(0,0,bounds.width,bounds.height);//capoPics.getWidth(),capoPics.getHeight()	
+	}
+	public void paintComponent(Graphics g) {
+
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 19; j++) {
+				if (chessBoard.buttons[i][j].getIdentity() == 1) {
+					g.setColor(Color.BLACK);
+					g.fillOval((int) chessBoard.buttons[i][j].getPos(0) - 12+i, (int) chessBoard.buttons[i][j].getPos(1) - 12+j, RADIUS, RADIUS);
+				} else if (chessBoard.buttons[i][j].getIdentity() == -1) {
+					g.setColor(Color.WHITE);
+					g.fillOval((int) chessBoard.buttons[i][j].getPos(0)- 12+i, (int) chessBoard.buttons[i][j].getPos(1) - 12+j, RADIUS, RADIUS);
+				}
+			}
+		}
+	}
+}

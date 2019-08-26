@@ -1,0 +1,34 @@
+package test_client;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+public class test_btn_listener implements ActionListener {
+	public String coordinates= "";
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		((Component) e.getSource()).setEnabled(false);
+		//this.setVisible(false);
+		coordinates=((Component) e.getSource()).getName();
+		//System.out.println(coordinates);
+		
+		String[] cor = coordinates.split(" ");
+		
+		try {
+			Main.send(Integer.parseInt(cor[0]), Integer.parseInt(cor[1]));
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		//repaint();	
+		
+	}
+
+}
