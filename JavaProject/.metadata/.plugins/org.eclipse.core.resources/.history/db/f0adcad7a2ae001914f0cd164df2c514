@@ -1,0 +1,77 @@
+package test_client;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+public class ChessButton extends JButton implements ActionListener {
+	
+	private float[] pos=new float[2];
+	private int identity; //1¶Â´Ñ¡A-1¥Õ´Ñ
+	private int x;
+	private int y;
+	ImageIcon btn_back = new ImageIcon(".\\btn_back.png");
+		
+	public ChessButton(int x,int y) {
+		//this.setBackground(Color.red);
+		this.setOpaque(false);
+		this.setContentAreaFilled(true);
+		//setIcon(".\\btn_back.png",this);
+		this.setBorder(new RoundedBorder(30));
+		this.setBorderPainted(false);
+		this.addActionListener(this);
+		this.x=x;
+		this.y=y;
+	}
+
+	public static void setIcon(String file, JButton iconButton) {
+		try {
+			ImageIcon icon = new ImageIcon(file);
+			Image temp = icon.getImage().getScaledInstance(iconButton.getWidth(), iconButton.getHeight(),
+					icon.getImage().SCALE_DEFAULT);
+			icon = new ImageIcon(temp);
+			iconButton.setIcon(icon);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	public void setPos(float posX,float posY) {
+		pos[0]=posX;
+		pos[1]=posY;
+	}
+	public float getPos(int i){
+		return pos[i];
+	}
+	public void setIdentity(int identity) {
+		this.identity=identity;
+	}
+	public int getIdentity() {
+		return this.identity;
+	}
+	public String getName() {
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.append(this.y);
+		stringBuilder.append(" ");
+		stringBuilder.append(this.x);
+		String coordinates = stringBuilder.toString();
+		return coordinates;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setIdentity(1);
+		this.setEnabled(false);
+		//this.setVisible(false);
+		String coordinates=((Component) e.getSource()).getName();
+		System.out.println(coordinates);
+		repaint();	
+	}
+	
+
+	
+}

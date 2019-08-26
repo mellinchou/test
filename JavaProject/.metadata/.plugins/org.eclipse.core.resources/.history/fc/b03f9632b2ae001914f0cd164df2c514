@@ -1,0 +1,23 @@
+package test_client;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class test_btn_listener implements ActionListener {
+	public String coordinates= "";
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		((Component) e.getSource()).setEnabled(false);
+		//this.setVisible(false);
+		coordinates=((Component) e.getSource()).getName();
+		System.out.println(coordinates);
+		
+//		Main.send(coordinates, y);
+		
+		
+		//repaint();	
+		
+	}
+
+}

@@ -1,0 +1,59 @@
+package test_client;
+import java.awt.*;
+import javax.swing.*;
+
+
+public class BoardFrame extends JFrame{
+
+	public static GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	public static Rectangle bounds = ge.getMaximumWindowBounds();
+	
+	public static JComponent  newContentPane;
+	public static void main (String[] args) {
+		
+		
+		BoardFrame frame=new BoardFrame();	
+		
+		////顯示Home
+		prepareHome();
+		
+		//顯示遊戲進入畫面
+//		prepareMenu();	
+		
+		//顯示遊戲畫面
+//		prepareGame();
+		
+		//顯示frame
+		frame.setVisible(true);
+		
+	}
+	public BoardFrame() {			
+		newContentPane=new MainPanel() ;
+        newContentPane.setOpaque(true); //content panes must be opaque
+        setContentPane(newContentPane);       
+        this.setSize(bounds.width, bounds.height);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+//	public static void prepareHome() {
+//		//顯示Home
+//		HomePage menuHome=new HomePage(bounds.width,bounds.height);
+//		menuHome.setOpaque(true);
+//		newContentPane.add(menuHome,new Integer(100));
+//		menuHome.setBounds(0,0,bounds.width,bounds.height);
+//	}
+//	public static void prepareMenu() {
+//		//顯示遊戲進入畫面
+//		MenuPage homePanel=new MenuPage(bounds.width,bounds.height);
+//		homePanel.setOpaque(true);
+//		newContentPane.add(homePanel,new Integer(100));
+//		homePanel.setBounds(0,0,bounds.width,bounds.height);
+//	}
+//	
+//	public static void prepareGame() {
+//		//顯示遊戲畫面
+//		CapoGame capoPics=new CapoGame(bounds.width,bounds.height);	
+//		capoPics.setOpaque(true);
+//		newContentPane.add(capoPics,new Integer(100));
+//		capoPics.setBounds(0,0,bounds.width,bounds.height);//capoPics.getWidth(),capoPics.getHeight()	
+//	}
+}

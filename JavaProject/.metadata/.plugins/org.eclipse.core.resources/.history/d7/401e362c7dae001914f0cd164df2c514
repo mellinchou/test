@@ -1,0 +1,14 @@
+package small_test;
+
+public class Main {
+	public static void main(String[] args) {
+		Play p1=new Play();
+		p1.keys[0][0]=1;
+		p1.keys[0][1]=1;
+		p1.keys[0][2]=1;
+		p1.keys[0][3]=1;
+		p1.print();
+		int[] decision=p1.computerPlay();
+		System.out.println(decision[0]+" "+decision[1]);
+	}
+}

@@ -1,0 +1,29 @@
+package test_client;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+public class ChessButtonListener implements ActionListener {
+	public String coordinates= "";
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//((Component) e.getSource()).setVisible(false);
+		((Component) e.getSource()).setEnabled(false);
+		
+		//this.setVisible(false);
+		coordinates=((Component) e.getSource()).getName();
+		String[] cor = coordinates.split(" ");
+		
+		try {
+			Main.send(Integer.parseInt(cor[0]), Integer.parseInt(cor[1]));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+	}
+
+}
