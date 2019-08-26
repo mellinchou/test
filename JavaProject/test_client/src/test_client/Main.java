@@ -118,6 +118,8 @@ public class Main extends JFrame{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+System.out.println("hello!");
+
 		in.close();
 	}
 	
